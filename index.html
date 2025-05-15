@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Barcode Generator from Text Block</title>
+  <title>Barcode Generator</title>
   <style>
     body { font-family: sans-serif; text-align: center; }
     textarea { width: 80%; height: 100px; margin: 20px auto; display: block; }
@@ -27,17 +27,41 @@
   <h1>Barcode Generator</h1>
   <p>Enter a comma-separated list of items:</p>
   <textarea id="inputText" placeholder="Example: Gauze, IV Start Kit, 18g IV, Syringe"></textarea>
-  <button onclick="generateBarcodes()">Generate Barcodes</button>
+  <button id="generateBtn">Generate Barcodes</button>
 
   <div id="barcodes" class="barcode-container"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/jsbarcode"></script>
+  <!-- JsBarcode library -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+
   <script>
-    function generateBarcodes() {
+    document.getElementById("generateBtn").addEventListener("click", function () {
       const container = document.getElementById("barcodes");
-      container.innerHTML = ""; // Clear old barcodes
-      const items = document.getElementById("inputText").value.split(",").map(item => item.trim()).filter(Boolean);
+      container.innerHTML = ""; // Clear previous
+
+      const input = document.getElementById("inputText").value;
+      const items = input.split(",").map(i => i.trim()).filter(Boolean);
 
       items.forEach((item, index) => {
-        const wrapper = document.createElement
+        const wrapper = document.createElement("div");
+        wrapper.className = "barcode";
 
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+        const label = document.createElement("div");
+        label.textContent = item;
+
+        wrapper.appendChild(svg);
+        wrapper.appendChild(label);
+        container.appendChild(wrapper);
+
+        JsBarcode(svg, item, {
+          format: "CODE128",
+          displayValue: false
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
