@@ -1,61 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Printable Barcode Sheet</title>
-    <style>
-        .barcode-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .barcode {
-            margin: 20px;
-            text-align: center;
-        }
-        svg {
-            width: 200px;
-            height: 100px;
-        }
-    </style>
+  <title>Barcode Generator from Text Block</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; }
+    textarea { width: 80%; height: 100px; margin: 20px auto; display: block; }
+    button { margin: 10px; padding: 10px 20px; font-size: 16px; }
+    .barcode-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .barcode {
+      margin: 20px;
+      text-align: center;
+    }
+    svg {
+      width: 200px;
+      height: 100px;
+    }
+  </style>
 </head>
 <body>
-    <h1 style="text-align:center;">Barcode Sheet</h1>
-    <div class="barcode-container">
-        <div class="barcode">
-            <svg id="code1"></svg>
-            <div>Item A</div>
-        </div>
-        <div class="barcode">
-            <svg id="code2"></svg>
-            <div>Item B</div>
-        </div>
-        <div class="barcode">
-            <svg id="code3"></svg>
-            <div>Item C</div>
-        </div>
-        <div class="barcode">
-            <svg id="code4"></svg>
-            <div>Item D</div>
-        </div>
-        <div class="barcode">
-            <svg id="code5"></svg>
-            <div>Item E</div>
-        </div>
-        <div class="barcode">
-            <svg id="code6"></svg>
-            <div>Item F</div>
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode"></script>
-    <script>
-        JsBarcode("#code1", "ITEM-A");
-        JsBarcode("#code2", "ITEM-B");
-        JsBarcode("#code3", "ITEM-C");
-        JsBarcode("#code4", "ITEM-D");
-        JsBarcode("#code5", "ITEM-E");
-        JsBarcode("#code6", "ITEM-F");
-    </script>
-</body>
-</html>
+  <h1>Barcode Generator</h1>
+  <p>Enter a comma-separated list of items:</p>
+  <textarea id="inputText" placeholder="Example: Gauze, IV Start Kit, 18g IV, Syringe"></textarea>
+  <button onclick="generateBarcodes()">Generate Barcodes</button>
+
+  <div id="barcodes" class="barcode-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode"></script>
+  <script>
+    function generateBarcodes() {
+      const container = document.getElementById("barcodes");
+      container.innerHTML = ""; // Clear old barcodes
+      const items = document.getElementById("inputText").value.split(",").map(item => item.trim()).filter(Boolean);
+
+      items.forEach((item, index) => {
+        const wrapper = document.createElement
+
